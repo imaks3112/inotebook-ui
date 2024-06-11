@@ -28,7 +28,7 @@ function App() {
       <Router>
         <Navbar />
         <Alert alert={alert}/>
-        <div className="container my-4">
+        <div className="container" style={{padding:"4rem"}}>
         <Routes>
           <Route exact path="/" element={<Home showAlert={showAlert}/>} />
           <Route exact path="/about" element={<About />} />

@@ -13,7 +13,7 @@ export default function Alert(props) {
 
   return (
     props.alert && (
-      <div className={`alert alert-${props.alert.type}`} role="alert">
+      <div className={`alert alert-${props.alert.type}`} style={{marginBottom:"0"}} role="alert">
         <strong>{capitalize(props.alert.type)}</strong> : {props.alert.msg}
       </div>
     )
