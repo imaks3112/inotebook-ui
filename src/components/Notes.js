@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/noteContext";
 import Noteitem from "./Noteitem";
 import AddNote from "./AddNote";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(NoteContext);
   const { notes, getAlldNote, editNote } = context;
   const ref = useRef(null);
@@ -20,6 +20,7 @@ const Notes = () => {
   const handleClick = (e) => {
     editNote(note.id, note.title, note.description, note.tag);
     refClose.current.click();
+    props.showAlert('Updated succefully', 'success');
   };
 
   const onChange = (e) => {
@@ -33,7 +34,7 @@ const Notes = () => {
 
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={props.showAlert}/>
 
       <button
         type="button"
@@ -139,7 +140,7 @@ const Notes = () => {
         </div>
         {notes.map((note) => {
           return (
-            <Noteitem key={note._id} updateNote={updateNote} note={note} />
+            <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
           );
         })}
       </div>
