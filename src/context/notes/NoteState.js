@@ -34,26 +34,15 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const json = response.json;
-    console.log(json);
-
-    const note = {
-      _id: "665e1bc284cf103939d88462",
-      user: "665a2f8dbbb67827ebce2f1e",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2024-06-03T19:38:42.073Z",
-      __v: 0,
-    };
-    setNotes(notes.concat(note));
+    const note = await response.json();
+     setNotes(notes.concat(note));
   };
 
   // Edit note
   const editNote = async (id, title, description, tag) => {
     // Edit API call
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "auth-token":
@@ -61,24 +50,25 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const json = response.json;
-    console.log(json);
+    const json = response.json();
+
+    let newNotes = JSON.parse(JSON.stringify(notes));
 
     // update logic.
     for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+      const element = newNotes[index];
       if (element._id === id) {
         element.title = title;
         element.description = description;
         element.tag = tag;
+        break;
       }
     }
+    setNotes(newNotes);
   };
 
   // delete note
   const deleteNote =async (id) => {
-    console.log(id);
-
     // delete API call
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: "DELETE",
@@ -88,8 +78,7 @@ const NoteState = (props) => {
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY1YTJmOGRiYmI2NzgyN2ViY2UyZjFlIn0sImlhdCI6MTcxNzMzOTkzMH0.JHcSiW36Xybp-depMW4pTl6m2mMwE1S0Jz1jJG7KxsY",
       },
     });
-    const json = response.json;
-    console.log('delete note', json);
+    const json = response.json();
 
     const newNotes = notes.filter((note) => note._id !== id);
     setNotes(newNotes);
