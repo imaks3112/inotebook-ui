@@ -50,7 +50,7 @@ const Notes = (props) => {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        Launch demo modal
+        modal
       </button>
 
       <div
